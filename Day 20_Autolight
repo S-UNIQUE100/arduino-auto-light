@@ -1,0 +1,26 @@
+// ---- Pin setup ----
+const int LDR_PIN = A0;
+const int LED_PIN = 9;
+
+void setup() {
+  pinMode(LED_PIN, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  // ---- Sensor reading ----
+  int lightValue = analogRead(LDR_PIN);
+
+  // ---- Logic: darker room = brighter LED ----
+  int brightness = map(lightValue, 54, 974, 255, 0);
+  brightness = constrain(brightness, 0, 255);
+
+  // ---- Output control ----
+  analogWrite(LED_PIN, brightness);
+
+  Serial.print("Light: ");
+  Serial.print(lightValue);
+  Serial.print(" | Brightness: ");
+  Serial.println(brightness);
+  delay(200);
+}
